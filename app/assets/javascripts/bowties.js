@@ -1,21 +1,33 @@
 $(document).ready(function() {
 
+// CREATE NEW BOWTIE BUTTON
+  var generateCreateButton = function(bowties) {
+    createButton = '<a class="btn btn-cyan createBowtieButton" data-id="' + bowties[i].id + '">' + 'Create New' + '</a>'
+
+    $('body').append(createButton);
+  }
+
+
+// SHOW LIST OF BOWTIES
   var generateIndex = function(bowties) {
     var newElem = "";
 
     for (var i = 0; i < bowties.length; i++) {
-      newElem += '<div class="card">' +
-                    '<div class="card-block col-xs-4">' +
+      newElem += '<div class="card col-md-4 col-sm-12">' +
+                    '<div class="card-block col-md-4 col-sm-12">' +
                     // title
                     '<h6 class="card-title">' + bowties[i].id + '</h6>' +
                     // text
                      '<p class="card-text">' + bowties[i].material +
                       ' - ' +
                       bowties[i].pattern + '</p>' +
-                  '</div>' + '</div>'
+                  '<a class="btn btn-cyan editBowtieButton" data-id="' + bowties[i].id + '">' + 'Edit' + '</a>' +
+                  '<a class="btn btn-cyan deleteBowtieButton" data-id="' + bowties[i].id + '">' + 'Delete' + '</a>' +
+                  '</div>' +
+                  '</div>'
     }
 
-    newElem = '<div class="bowtieList">' + '<div class="row">' + newElem + '</div>' + '</div>'
+    newElem = '<div class="container">' + '<div class="row">' + newElem + '</div>' + '</div>'
 
     $('body').append(newElem);
   }
@@ -25,86 +37,51 @@ $(document).ready(function() {
     method: "GET",
     success: function(resp) {
       generateIndex(resp);
+      createButton();
     }
   });
+
+
+// EDIT THE BOWTIE
+  // $(".card").on('click', '.editBowtieButton', function (e) {
+  //   e.preventDefault();
+
+  //   var $button = $(e.target);
+  //   var id      = $button.data('id');
+
+  //   $.ajax({
+  //     url: "/api/bowties" + id,
+  //     method: 'GET'
+  //   }).done(function(bowtie){
+  //     updateParams   = bowtie.params
+  //   });
+  // });
+
+
+
+// DELETE THE BOWTIE
+//  $(".card").on('click', '.editBowtieButton', function (e) {
+  //   e.preventDefault();
+
+//     var $button = $(e.target);
+//     var id      = $button.data('id');
+
+//     $.ajax({
+//       url: '/user/list/' + id,
+//       method: 'DELETE',
+//     }).done(function(bowtie){
+//       $(e.target).remove();
+//     });
+//   });
+
+
+
 })
 
 
 // ********************************************************
 
 
-
-// function bowtieDisplay (bowties) {
-//     var newBowtie = '' +
-//     '<div class="bowtie col-xs-5">' +
-//           '<h5 class="card-header elegant-color-dark white-text">' + list.location + '</h5>' +
-//           '<div class="card-block"> <a class="btn btn-lime editListButton" data-id="' + list._id + '">Edit</a> <a class="btn btn-cyan deleteListButton" data-id="' + list._id + '">Delete</a> </div>' +
-//         '</div>'
-//       '</div>';
-//     $(newText).appendTo($cardList);
-//   }
-
-
-
-// // EDIT BUTTON ON LIST CARD - Retrieve info to put in modal
-//   $("#cardList").on('click', '.editListButton', function (e) {
-//     e.preventDefault();
-
-//     var $button = $(e.target);
-//     var id      = $button.data('id');
-
-//     $.ajax({
-//       url: '/user/list/' + id,
-//       method: 'get'
-//     }).done(function(list){
-//       createMode = false;
-//       updateId   = list._id;
-//       replacePlaces(list);
-//       $('#myModal').modal('show');
-//     });
-//   });
-
-
-// // DELETE BUTTON ON LIST CARD
-//   $("#cardList").on('click', '.deleteListButton', function(e) {
-//      e.preventDefault();
-
-//     var $button = $(e.target);
-//     var id      = $button.data('id');
-
-//     $.ajax({
-//       url: '/user/list/' + id,
-//       method: 'delete',
-//     }).done(function(list){
-//       $(e.target).parents('.card').remove();
-//       console.log("list card deleted");
-//     });
-//   });
-
-// // SUBMIT NEW LIST AND SAVE EDITED LIST
-//   $("#addlist").submit(function(event) {
-//     event.preventDefault();
-
-//     addPlaces();
-
-//     if (createMode) {
-//       saveList();
-//     } else {
-//       saveList("/user/list/" + updateId, "PUT")
-//     }
-
-//     // Clears labels and removes active class
-//     $(this).find('input').val('');
-//     $(this).find('label').removeClass('active');
-//     $(this).find('i').removeClass('active');
-//   });
-
-//   // Reset modal once closed
-//   $('#myModal').on("hidden.bs.modal", function () {
-//     createMode = true;
-//     updateId   = null;
-//   })
-// });
 
 
 //   // LOOK FOR CHECKED LOCATIONS
